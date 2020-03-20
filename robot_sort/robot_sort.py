@@ -1,3 +1,19 @@
+
+# You have been given a robot with very basic capabilities:
+
+# It can move left or right.
+# It can pick up an item
+# If it tries to pick up an item while already holding one, it will swap the items instead.
+# It can compare the item it's holding to the item in front of it.
+# It can switch a light on its head on or off.
+# Your task is to program this robot to sort lists using ONLY these abilities.
+
+# We discussed a sorting method this week that might be useful. Which one? Selection sort
+
+# The robot has exactly one bit of memory: its light. Why is this important?
+# It allows you to use it as a trigger
+
+
 class SortingRobot:
     def __init__(self, l):
         """
@@ -92,19 +108,63 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    #plan
+    #if the light is on it will start storting 
+    # use a while loop because it is sorting so while true
+    # start with the first item in the list and pick it up
+    # move right and compare it with the second item
+    # if item is smaller go to next one
+    #if it is bigger swap it
+    # go through the whole list to find the biggest one and then sort it to the end
+
     def sort(self):
         """
         Sort the robot's list.
         """
         # Fill this out
-        pass
+         
+         
+        # to start the loop like a on switch
+        self.set_light_on()
+        # set it back to off so we can use it again later
+        while(self.light_is_on()):
+            self.set_light_off() 
+             # picking up the first item because the robot is holding none, but it will put none in the list. need to pick it back up
+            while(self.can_move_right()):
+                self.swap_item()
+                # move right once
+                self.move_right() 
+                 #checking the size of the number to check if it is bigger
+                if(self.compare_item() == 1):
+                    self.swap_item()
+                    
+
+                    #got to pick none back up               
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+                    # found a swap and should continue sorting
+                    self.set_light_on() 
+                # did not find a swap so go back and pick up none again
+                   
+                else: 
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+            #go back to the start
+            while(self.can_move_left()):
+                self.move_left()
+
+
+
+
 
 
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
 
-    l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
+    l = [15, 1, 332, 49, 2]
 
     robot = SortingRobot(l)
 
